@@ -1,15 +1,11 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { categories, getTool, type Tool, type ToolType } from "@/lib/tools"
+import { createElement } from "react"
+import { categories, getTool, type Tool } from "@/lib/tools"
+import { toolComponents } from "@/lib/tool-components"
 import { buttonVariants } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-
-const typeMeta: Record<ToolType, { label: string; dot: string }> = {
-  client: { label: "Client · runs in browser", dot: "bg-emerald-500" },
-  hybrid: { label: "Hybrid · may need a server", dot: "bg-amber-500" },
-  server: { label: "Server · requires a backend", dot: "bg-red-500" },
-}
 
 export async function generateStaticParams() {
   return categories.flatMap((c) => c.tools.map((t) => ({ slug: t.slug })))
@@ -40,25 +36,23 @@ export default async function ToolPage({ params }: PageProps<"/tools/[slug]">) {
   if (!tool) notFound()
 
   const { prev, next } = neighbors(slug)
-  const meta = typeMeta[tool.type]
-  const ToolComponent = tool.component
+  const Icon = tool.icon
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-10 sm:px-6">
-      <div className="flex items-center justify-between gap-4">
-        <Link href="/" className={buttonVariants({ variant: "ghost", size: "sm" })}>
-          <span aria-hidden>←</span> All tools
-        </Link>
-        <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
-          <span className={`size-1.5 rounded-full ${meta.dot}`} />
-          {meta.label}
-        </span>
-      </div>
+      <Link href="/" className={buttonVariants({ variant: "ghost", size: "sm" })}>
+        <span aria-hidden>←</span> All tools
+      </Link>
 
-      <header className="flex flex-col gap-2">
-        <p className="font-mono text-[11px] tracking-widest text-muted-foreground uppercase">
-          #{String(tool.id).padStart(3, "0")} · {tool.name}
-        </p>
+      <header className="flex flex-col gap-3">
+        <div className="flex items-center gap-3">
+          <span className="flex size-10 items-center justify-center border border-border bg-muted/50 text-foreground">
+            <Icon className="size-5" aria-hidden />
+          </span>
+          <p className="font-mono text-[11px] tracking-widest text-muted-foreground uppercase">
+            #{String(tool.id).padStart(3, "0")} · {tool.name}
+          </p>
+        </div>
         <h1 className="font-heading text-3xl font-bold tracking-wide uppercase sm:text-4xl">
           {tool.name}
         </h1>
@@ -72,7 +66,7 @@ export default async function ToolPage({ params }: PageProps<"/tools/[slug]">) {
           <CardTitle>Calculator</CardTitle>
         </CardHeader>
         <CardContent>
-          <ToolComponent />
+          {toolComponents[slug] ? createElement(toolComponents[slug]) : null}
         </CardContent>
       </Card>
 
