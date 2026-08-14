@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 import type { Tool } from "@/lib/tools"
 
 export function ToolCard({ tool }: { tool: Tool }) {
@@ -24,7 +25,7 @@ export function ToolCard({ tool }: { tool: Tool }) {
       </p>
       <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold tracking-widest text-foreground uppercase group-hover:underline">
         Open tool
-        <span aria-hidden>→</span>
+        <ArrowRight aria-hidden />
       </span>
     </Link>
   )

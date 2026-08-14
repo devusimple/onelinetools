@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { createElement } from "react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 import { categories, getTool, type Tool } from "@/lib/tools"
 import { toolComponents } from "@/lib/tool-components"
 import { buttonVariants } from "@/components/ui/button"
@@ -41,7 +42,7 @@ export default async function ToolPage({ params }: PageProps<"/tools/[slug]">) {
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-10 sm:px-6">
       <Link href="/" className={buttonVariants({ variant: "ghost", size: "sm" })}>
-        <span aria-hidden>←</span> All tools
+        <ArrowLeft aria-hidden /> All tools
       </Link>
 
       <header className="flex flex-col gap-3">
@@ -70,25 +71,35 @@ export default async function ToolPage({ params }: PageProps<"/tools/[slug]">) {
         </CardContent>
       </Card>
 
-      <nav className="flex items-center justify-between gap-4 border-t border-border pt-6">
-        {prev ? (
-          <Link
-            href={`/tools/${prev.slug}`}
-            className={buttonVariants({ variant: "ghost", size: "sm" })}
-          >
-            <span aria-hidden>←</span> {prev.name}
-          </Link>
-        ) : (
-          <span />
-        )}
-        {next ? (
-          <Link
-            href={`/tools/${next.slug}`}
-            className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "ml-auto")}
-          >
-            {next.name} <span aria-hidden>→</span>
-          </Link>
-        ) : null}
+      <nav className="grid gap-2 border-t border-border pt-6 sm:grid-cols-2">
+        <div className="flex">
+          {prev ? (
+            <Link
+              href={`/tools/${prev.slug}`}
+              className={cn(
+                buttonVariants({ variant: "ghost", size: "sm" }),
+                "w-full min-w-0 justify-start"
+              )}
+            >
+              <ArrowLeft aria-hidden />
+              <span className="min-w-0 flex-1 truncate">{prev.name}</span>
+            </Link>
+          ) : null}
+        </div>
+        <div className="flex sm:justify-end">
+          {next ? (
+            <Link
+              href={`/tools/${next.slug}`}
+              className={cn(
+                buttonVariants({ variant: "ghost", size: "sm" }),
+                "w-full min-w-0 justify-end"
+              )}
+            >
+              <span className="min-w-0 flex-1 truncate">{next.name}</span>
+              <ArrowRight aria-hidden />
+            </Link>
+          ) : null}
+        </div>
       </nav>
     </main>
   )
