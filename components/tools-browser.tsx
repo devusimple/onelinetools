@@ -5,11 +5,17 @@ import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { ToolCard } from "@/components/tool-card"
 import { categories, type ToolCategory } from "@/lib/tools"
+import { cn } from "@/lib/utils"
 
-function filterCategories(categories: ToolCategory[], query: string): ToolCategory[] {
+function filterCategories(
+  categories: ToolCategory[],
+  query: string,
+  categoryId: string | null
+): ToolCategory[] {
   const q = query.trim().toLowerCase()
-  if (!q) return categories
-  return categories
+  const base = categoryId ? categories.filter((c) => c.id === categoryId) : categories
+  if (!q) return base
+  return base
     .map((cat) => ({
       ...cat,
       tools: cat.tools.filter(
@@ -24,9 +30,18 @@ function filterCategories(categories: ToolCategory[], query: string): ToolCatego
 
 export function ToolsBrowser() {
   const [query, setQuery] = useState("")
+  const [categoryId, setCategoryId] = useState<string | null>(null)
 
-  const filtered = useMemo(() => filterCategories(categories, query), [query])
+  const filtered = useMemo(
+    () => filterCategories(categories, query, categoryId),
+    [query, categoryId]
+  )
   const shown = filtered.reduce((n, c) => n + c.tools.length, 0)
+
+  const tabs = [
+    { id: null as string | null, title: "All" },
+    ...categories.map((c) => ({ id: c.id, title: c.title })),
+  ]
 
   return (
     <div className="flex flex-col gap-6">
@@ -44,6 +59,32 @@ export function ToolsBrowser() {
           aria-label="Search tools"
         />
       </div>
+
+      <nav aria-label="Filter tools by category">
+        <div className="-mx-4 overflow-x-auto px-4 no-scrollbar sm:-mx-6 sm:px-6">
+          <div className="flex w-max gap-2">
+            {tabs.map((tab) => {
+              const active = categoryId === tab.id
+              return (
+                <button
+                  key={tab.id ?? "all"}
+                  type="button"
+                  onClick={() => setCategoryId(tab.id)}
+                  aria-pressed={active}
+                  className={cn(
+                    "h-9 shrink-0 rounded-none border px-4 text-xs font-semibold tracking-widest whitespace-nowrap uppercase transition-colors",
+                    active
+                      ? "border-ring bg-primary text-primary-foreground"
+                      : "border-border bg-card text-muted-foreground hover:border-ring hover:text-foreground"
+                  )}
+                >
+                  {tab.title}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </nav>
 
       {shown === 0 ? (
         <p className="py-10 text-sm text-muted-foreground">
