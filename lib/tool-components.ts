@@ -122,6 +122,60 @@ import {
   CreditCardPayoffCalculator,
   DebtSnowballCalculator,
 } from "@/components/calculators/finance-loan"
+import {
+  AgeCalculator,
+  DateDifferenceCalculator,
+  DaysBetweenDatesCalculator,
+  DaysUntilDateCalculator,
+  DaysSinceDateCalculator,
+  AddDaysToDateCalculator,
+  SubtractDaysFromDateCalculator,
+  AddMonthsToDateCalculator,
+  AddYearsToDateCalculator,
+  DayOfWeekCalculator,
+  WeekNumberCalculator,
+  WeekdayCalculator,
+  LeapYearChecker,
+  AgeAtSpecificDateCalculator,
+} from "@/components/calculators/date-calc"
+import {
+  BusinessDaysCalculator,
+  WorkingDaysCalculator,
+  WorkingHoursCalculator,
+  DateRangeGenerator,
+} from "@/components/calculators/date-work"
+import {
+  CalendarGenerator,
+  MonthlyCalendar,
+  YearlyCalendar,
+  PrintableCalendar,
+} from "@/components/calculators/date-calendar"
+import {
+  BirthdayCountdown,
+  EventCountdown,
+  CountdownTimer,
+} from "@/components/calculators/date-countdown"
+import {
+  Stopwatch,
+  PomodoroTimer,
+  IntervalTimer,
+  OnlineAlarm,
+} from "@/components/calculators/date-timer"
+import {
+  WorldClock,
+  TimeZoneConverter,
+  MeetingTimeConverter,
+  UtcConverter,
+} from "@/components/calculators/date-zones"
+import {
+  UnixTimestampConverter,
+  UnixTimestampGenerator,
+  IsoDateConverter,
+  EpochConverter,
+  QuarterCalculator,
+  FiscalYearCalculator,
+  DateFormatConverter,
+} from "@/components/calculators/date-unix"
 
 export const toolComponents: Record<string, ComponentType> = {
   "basic-calculator": BasicCalculator,
@@ -224,6 +278,46 @@ export const toolComponents: Record<string, ComponentType> = {
   "credit-card-interest-calculator": CreditCardInterestCalculator,
   "credit-card-payoff-calculator": CreditCardPayoffCalculator,
   "debt-snowball-calculator": DebtSnowballCalculator,
+  "age-calculator": AgeCalculator,
+  "date-difference-calculator": DateDifferenceCalculator,
+  "days-between-dates-calculator": DaysBetweenDatesCalculator,
+  "days-until-date-calculator": DaysUntilDateCalculator,
+  "days-since-date-calculator": DaysSinceDateCalculator,
+  "add-days-to-date-calculator": AddDaysToDateCalculator,
+  "subtract-days-from-date-calculator": SubtractDaysFromDateCalculator,
+  "add-months-to-date-calculator": AddMonthsToDateCalculator,
+  "add-years-to-date-calculator": AddYearsToDateCalculator,
+  "day-of-week-calculator": DayOfWeekCalculator,
+  "week-number-calculator": WeekNumberCalculator,
+  "weekday-calculator": WeekdayCalculator,
+  "business-days-calculator": BusinessDaysCalculator,
+  "working-days-calculator": WorkingDaysCalculator,
+  "working-hours-calculator": WorkingHoursCalculator,
+  "date-range-generator": DateRangeGenerator,
+  "calendar-generator": CalendarGenerator,
+  "monthly-calendar": MonthlyCalendar,
+  "yearly-calendar": YearlyCalendar,
+  "printable-calendar": PrintableCalendar,
+  "birthday-countdown": BirthdayCountdown,
+  "event-countdown": EventCountdown,
+  "countdown-timer": CountdownTimer,
+  "stopwatch": Stopwatch,
+  "pomodoro-timer": PomodoroTimer,
+  "interval-timer": IntervalTimer,
+  "online-alarm": OnlineAlarm,
+  "world-clock": WorldClock,
+  "time-zone-converter": TimeZoneConverter,
+  "meeting-time-converter": MeetingTimeConverter,
+  "utc-converter": UtcConverter,
+  "unix-timestamp-converter": UnixTimestampConverter,
+  "unix-timestamp-generator": UnixTimestampGenerator,
+  "iso-date-converter": IsoDateConverter,
+  "epoch-converter": EpochConverter,
+  "leap-year-checker": LeapYearChecker,
+  "quarter-calculator": QuarterCalculator,
+  "fiscal-year-calculator": FiscalYearCalculator,
+  "age-at-specific-date-calculator": AgeAtSpecificDateCalculator,
+  "date-format-converter": DateFormatConverter,
 }
 
 export function getToolComponent(slug: string): ComponentType | undefined {

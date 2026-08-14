@@ -88,6 +88,27 @@ export function SelectField({
   )
 }
 
+export function DateField({
+  id,
+  label,
+  value,
+  onChange,
+  className,
+}: {
+  id: string
+  label: string
+  value: string
+  onChange: (v: string) => void
+  className?: string
+}) {
+  return (
+    <div className={cn("flex flex-col gap-2", className)}>
+      <Label htmlFor={id}>{label}</Label>
+      <Input id={id} type="date" value={value} onChange={(e) => onChange(e.target.value)} />
+    </div>
+  )
+}
+
 export function ListField({
   id,
   label,
